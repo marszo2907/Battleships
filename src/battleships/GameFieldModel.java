@@ -19,6 +19,10 @@ public class GameFieldModel {
         }
     }
 
+    public char[][] getGameField() {
+        return gameField;
+    }
+
     public void placeBattleship(/* TODO */) {
         /* TODO */
     }
