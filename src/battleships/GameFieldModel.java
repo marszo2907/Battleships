@@ -23,6 +23,10 @@ public class GameFieldModel {
         return gameField;
     }
 
+    public int getNodesLeft() {
+        return nodesLeft;
+    }
+
     public void placeBattleship(/* TODO */) {
         /* TODO */
     }

@@ -13,14 +13,16 @@ public class GameFieldView {
         StringBuilder stringBuilder = new StringBuilder(" ");
 
         for (int i = 0; GameFieldModel.FIELD_ROWS_COLUMNS_COUNT > i; ++i) {
-            stringBuilder.append(" ").append(i + 1);
+            stringBuilder.append(' ').append(i + 1);
         }
+        
+        stringBuilder.append('\n');
 
         for (int i = 0; GameFieldModel.FIELD_ROWS_COLUMNS_COUNT > i; ++i) {
-            stringBuilder.append((char) i + 'A');
+            stringBuilder.append((char) (i + 'A'));
 
             for (int j = 0; GameFieldModel.FIELD_ROWS_COLUMNS_COUNT > j; ++j) {
-                stringBuilder.append(" ").append(player.getGameField()[i][j]);
+                stringBuilder.append(' ').append(player.getGameField()[i][j]);
             }
 
             stringBuilder.append('\n');
@@ -34,16 +36,18 @@ public class GameFieldView {
 
         /* Append an opponent's game field */
         for (int i = 0; GameFieldModel.FIELD_ROWS_COLUMNS_COUNT > i; ++i) {
-            stringBuilder.append(" ").append(i + 1);
+            stringBuilder.append(' ').append(i + 1);
         }
 
+        stringBuilder.append('\n');
+
         for (int i = 0; GameFieldModel.FIELD_ROWS_COLUMNS_COUNT > i; ++i) {
-            stringBuilder.append((char) i + 'A');
+            stringBuilder.append((char) (i + 'A'));
 
             for (int j = 0; GameFieldModel.FIELD_ROWS_COLUMNS_COUNT > j; ++j) {
                 char tempField = opponent.getGameField()[i][j];
 
-                stringBuilder.append(" ");
+                stringBuilder.append(' ');
                 if (GameFieldModel.NODE == tempField) {
                     stringBuilder.append(GameFieldModel.FOG_OF_WAR);
                 } else {

@@ -1,11 +1,11 @@
 package battleships;
 
 public enum Battleship {
-    DESTROYER(2, "Destroyer"),
+    AIRCRAFT_CARRIER(5, "Aircraft Carrier"),
+    BATTLESHIP(4, "Battleship"),
     CRUISER(3, "Cruiser"),
     SUBMARINE(3, "Submarine"),
-    BATTLESHIP(4, "Battleship"),
-    AIRCRAFT_CARRIER(5, "Aircraft Carrier");
+    DESTROYER(2, "Destroyer");
 
     public int getLength() {
         return length;
