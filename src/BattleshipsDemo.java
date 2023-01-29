@@ -5,7 +5,7 @@ public class BattleshipsDemo {
         BattleshipsController battleshipsController = new BattleshipsController();
 
         while (0 != battleshipsController.getCurrentPlayerNodesLeft()) {
-            /* TODO */
+            battleshipsController.takeShot();
         }
 
         System.out.println("You sank the last ship. You won. Congratulations!");

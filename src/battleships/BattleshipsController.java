@@ -8,12 +8,7 @@ public class BattleshipsController {
         gameFieldModel2 = new GameFieldModel();
         isPlayer1Playing = true;
 
-        Scanner scanner = new Scanner(System.in);
-
         addShips();
-        switchPlayer();
-        System.out.println("Press [ENTER] to pass the move to another player.");
-        scanner.nextLine();
         addShips();
     }
 
@@ -22,7 +17,54 @@ public class BattleshipsController {
     }
 
     public void takeShot() {
-        /* TODO */
+        boolean         isInputCorrect = false;
+        Shot            result = null;
+        Scanner         scanner = new Scanner(System.in);
+        GameFieldModel  tempGameFieldModel;
+        GameFieldModel  tempGameFieldModel2;
+
+        if (isPlayer1Playing) {
+            tempGameFieldModel = gameFieldModel1;
+            System.out.print(GameFieldView.getInstance()
+                    .getView(gameFieldModel2, gameFieldModel1));
+            System.out.println("Player 1, take a shot:");
+        } else {
+            tempGameFieldModel = gameFieldModel2;
+            System.out.print(GameFieldView.getInstance()
+                    .getView(gameFieldModel1, gameFieldModel2));
+            System.out.println("Player 2, take a shot:");
+        }
+
+        while (!isInputCorrect) {
+            try {
+                isInputCorrect = true;
+
+                switch (tempGameFieldModel.takeShot(
+                        new Coordinate(scanner.nextLine()))) {
+                    case HIT:
+                        System.out.println("You hit a ship!");
+                        break;
+                    case MISS:
+                        System.out.println("You missed!");
+                        break;
+                    case SANK:
+                        System.out.println("You sank a ship!");
+                        break;
+                    case DUPLICATE:
+                        isInputCorrect = false;
+                        System.out.println("You entered the same coordinate" +
+                                " twice! Try again:");
+                        break;
+                }
+            } catch (Exception e) {
+                isInputCorrect = false;
+                System.out.printf("Error! %s Try again:%n", e.getMessage());
+            }
+        }
+
+        switchPlayer();
+        System.out.println("Press [ENTER] to pass the move to another player.");
+        scanner.nextLine();
     }
 
     public int getCurrentPlayerNodesLeft() {
@@ -30,9 +72,9 @@ public class BattleshipsController {
                 : gameFieldModel2.getNodesLeft();
     }
 
-    private GameFieldModel  gameFieldModel1;
-    private GameFieldModel  gameFieldModel2;
-    private boolean         isPlayer1Playing;
+    private final GameFieldModel    gameFieldModel1;
+    private final GameFieldModel    gameFieldModel2;
+    private boolean                 isPlayer1Playing;
 
     private void addShips() {
         boolean         isHorizontally;
@@ -44,10 +86,10 @@ public class BattleshipsController {
 
         if (isPlayer1Playing) {
             tempGameFieldModel = gameFieldModel1;
-            System.out.println("Player 1, place your ships on the game field:");
+            System.out.println("Player 1, place your ships on the game field!");
         } else {
             tempGameFieldModel = gameFieldModel2;
-            System.out.println("Player 2, place your ships on the game field:");
+            System.out.println("Player 2, place your ships on the game field!");
         }
 
         for (var battleship : Battleship.values()) {
@@ -85,5 +127,9 @@ public class BattleshipsController {
                 }
             }
         }
+
+        switchPlayer();
+        System.out.println("Press [ENTER] to pass the move to another player.");
+        scanner.nextLine();
     }
 }

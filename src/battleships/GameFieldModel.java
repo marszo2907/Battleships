@@ -52,15 +52,30 @@ public class GameFieldModel {
         }
     }
 
-    public Shot takeShot(/* TODO */) {
-        /* TODO */
-        return null;
+    public Shot takeShot(Coordinate coordinate) {
+        if (NODE == gameField[coordinate.getRow()][coordinate.getColumn()]) {
+            gameField[coordinate.getRow()][coordinate.getColumn()] = HIT;
+            nodesLeft--;
+
+            if (isShipSunk(coordinate.getRow(), coordinate.getColumn())) {
+                return Shot.SANK;
+            } else {
+                return Shot.HIT;
+            }
+        } else if (FOG_OF_WAR ==
+                gameField[coordinate.getRow()][coordinate.getColumn()]) {
+            gameField[coordinate.getRow()][coordinate.getColumn()] = MISS;
+
+            return Shot.MISS;
+        }
+
+        return Shot.DUPLICATE;
     }
 
     private char[][]    gameField;
     private int         nodesLeft;
 
-    private boolean isShipSunk(/* TODO */) {
+    private boolean isShipSunk(int rowIndex, int columnIndex) {
         /* TODO */
         return false;
     }
