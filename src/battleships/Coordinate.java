@@ -17,8 +17,8 @@ public class Coordinate {
         return Math.abs(coordinate1.getRow() - coordinate2.getRow()) + 1;
     }
 
-    public static Coordinate calculateBeginIndex(Coordinate coordinate1,
-                                                 Coordinate coordinate2) {
+    public static Coordinate calculateStartingIndex(Coordinate coordinate1,
+                                                    Coordinate coordinate2) {
         if (coordinate1.getColumn() != coordinate2.getColumn()
                 && coordinate1.getRow() != coordinate2.getRow()) {
             throw new IllegalArgumentException("Wrong ship location!");
