@@ -35,7 +35,11 @@ public class BattleshipsController {
     private boolean         isPlayer1Playing;
 
     private void addShips() {
+        boolean         isHorizontally;
+        boolean         isInputCorrect;
         Scanner         scanner = new Scanner(System.in);
+        Coordinate      tempCoordinate1;
+        Coordinate      tempCoordinate2;
         GameFieldModel  tempGameFieldModel;
 
         if (isPlayer1Playing) {
@@ -47,15 +51,38 @@ public class BattleshipsController {
         }
 
         for (var battleship : Battleship.values()) {
-            boolean isInputCorrect = false;
-            System.out.printf("Enter the coordinates of the %s (%d cells):%n",
-                    battleship.getName(), battleship.getLength());
+            isInputCorrect = false;
             System.out.print(GameFieldView.getInstance()
                     .getView(tempGameFieldModel));
+            System.out.printf("Enter the coordinates of the %s (%d cells):%n",
+                    battleship.getName(), battleship.getLength());
 
             while (!isInputCorrect) {
-                /* TODO */
-                isInputCorrect = true;
+                try {
+                    tempCoordinate1 = new Coordinate(scanner.next());
+                    tempCoordinate2 = new Coordinate(scanner.next());
+
+                    if (battleship.getLength()
+                            != Coordinate.calculateLength(tempCoordinate1, tempCoordinate2)) {
+                        throw new IllegalArgumentException("Wrong length of the %s!"
+                                .formatted(battleship.getName()));
+                    }
+
+                    isHorizontally = Coordinate
+                            .isHorizontally(tempCoordinate1, tempCoordinate2);
+                    tempCoordinate1 = Coordinate
+                            .calculateStartingIndex(tempCoordinate1,
+                                    tempCoordinate2);
+
+                    tempGameFieldModel.placeBattleship(battleship,
+                            tempCoordinate1.getRow(),
+                            tempCoordinate1.getColumn(), isHorizontally);
+
+                    isInputCorrect = true;
+                } catch (Exception e) {
+                    isInputCorrect = false;
+                    System.out.printf("Error! %s Try again:%n", e.getMessage());
+                }
             }
         }
     }
