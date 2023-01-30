@@ -31,7 +31,7 @@ public class GameFieldView {
         return stringBuilder.toString();
     }
 
-    public String getView(GameFieldModel opponent, GameFieldModel player) {
+    public String getView(GameFieldModel player, GameFieldModel opponent) {
         StringBuilder stringBuilder = new StringBuilder(" ");
 
         /* Append an opponent's game field */

@@ -24,14 +24,14 @@ public class BattleshipsController {
         GameFieldModel  tempGameFieldModel2;
 
         if (isPlayer1Playing) {
-            tempGameFieldModel = gameFieldModel1;
-            System.out.print(GameFieldView.getInstance()
-                    .getView(gameFieldModel2, gameFieldModel1));
-            System.out.println("Player 1, take a shot:");
-        } else {
             tempGameFieldModel = gameFieldModel2;
             System.out.print(GameFieldView.getInstance()
                     .getView(gameFieldModel1, gameFieldModel2));
+            System.out.println("Player 1, take a shot:");
+        } else {
+            tempGameFieldModel = gameFieldModel1;
+            System.out.print(GameFieldView.getInstance()
+                    .getView(gameFieldModel2, gameFieldModel1));
             System.out.println("Player 2, take a shot:");
         }
 
