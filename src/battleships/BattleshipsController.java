@@ -18,10 +18,8 @@ public class BattleshipsController {
 
     public void takeShot() {
         boolean         isInputCorrect = false;
-        Shot            result = null;
         Scanner         scanner = new Scanner(System.in);
         GameFieldModel  tempGameFieldModel;
-        GameFieldModel  tempGameFieldModel2;
 
         if (isPlayer1Playing) {
             tempGameFieldModel = gameFieldModel2;
@@ -48,7 +46,11 @@ public class BattleshipsController {
                         System.out.println("You missed!");
                         break;
                     case SANK:
-                        System.out.println("You sank a ship!");
+                        if (0 == tempGameFieldModel.getNodesLeft()) {
+                            System.out.println("You sank the last ship! Congratulations!");
+                        } else {
+                            System.out.println("You sank a ship!");
+                        }
                         break;
                     case DUPLICATE:
                         isInputCorrect = false;
@@ -62,9 +64,12 @@ public class BattleshipsController {
             }
         }
 
+        if (0 != tempGameFieldModel.getNodesLeft()) {
+            System.out.println("Press [ENTER] to pass the move to another player.");
+            scanner.nextLine();
+        }
+
         switchPlayer();
-        System.out.println("Press [ENTER] to pass the move to another player.");
-        scanner.nextLine();
     }
 
     public int getCurrentPlayerNodesLeft() {
@@ -120,6 +125,9 @@ public class BattleshipsController {
                             tempCoordinate1.getRow(),
                             tempCoordinate1.getColumn(), isHorizontally);
 
+                    if (scanner.hasNextLine()) {
+                        scanner.nextLine();
+                    }
                     isInputCorrect = true;
                 } catch (Exception e) {
                     isInputCorrect = false;
@@ -128,6 +136,8 @@ public class BattleshipsController {
             }
         }
 
+        System.out.print(GameFieldView.getInstance()
+                .getView(tempGameFieldModel));
         switchPlayer();
         System.out.println("Press [ENTER] to pass the move to another player.");
         scanner.nextLine();
