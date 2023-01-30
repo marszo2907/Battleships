@@ -76,9 +76,72 @@ public class GameFieldModel {
     private int         nodesLeft;
 
     private boolean isShipSunk(int rowIndex, int columnIndex) {
-        /* TODO */
-        return false;
+        int     bottomRowIndex = Math.min(FIELD_ROWS_COLUMNS_COUNT - 1, rowIndex + 1);
+        boolean isHorizontally;
+        int     leftColumnIndex;
+        int     tempIndex;
+        int     topRowIndex = Math.max(0, rowIndex - 1);
+
+        if (topRowIndex != rowIndex && (NODE == gameField[topRowIndex][columnIndex]
+                || HIT == gameField[topRowIndex][columnIndex])) {
+            isHorizontally = false;
+        } else if (bottomRowIndex != rowIndex
+                && (NODE == gameField[bottomRowIndex][columnIndex]
+                || HIT == gameField[bottomRowIndex][columnIndex])) {
+            isHorizontally = false;
+        } else {
+            isHorizontally = true;
+        }
+
+        if (isHorizontally) {
+            leftColumnIndex = columnIndex;
+            tempIndex = columnIndex;
+            while (0 != leftColumnIndex && leftColumnIndex == tempIndex) {
+                tempIndex = Math.max(0, tempIndex - 1);
+
+                if (NODE == gameField[rowIndex][tempIndex]
+                        || HIT == gameField[rowIndex][tempIndex]) {
+                    leftColumnIndex = tempIndex;
+                }
+            }
+
+            while (FIELD_ROWS_COLUMNS_COUNT != leftColumnIndex
+                    && FOG_OF_WAR != gameField[rowIndex][leftColumnIndex]
+                    && MISS != gameField[rowIndex][leftColumnIndex]) {
+                if (NODE == gameField[rowIndex][leftColumnIndex]) {
+                    return false;
+                }
+
+                leftColumnIndex++;
+            }
+        } else {
+            tempIndex = rowIndex;
+            topRowIndex = rowIndex;
+
+            while (0 != topRowIndex && topRowIndex == tempIndex) {
+                tempIndex = Math.max(0, tempIndex - 1);
+
+                if (NODE == gameField[tempIndex][columnIndex]
+                        || HIT == gameField[tempIndex][columnIndex]) {
+                    topRowIndex = tempIndex;
+                }
+            }
+
+            while (FIELD_ROWS_COLUMNS_COUNT != topRowIndex
+                    && FOG_OF_WAR != gameField[topRowIndex][columnIndex]
+                    && MISS != gameField[topRowIndex][columnIndex]) {
+                if (NODE == gameField[topRowIndex][columnIndex]) {
+                    return false;
+                }
+
+                topRowIndex++;
+            }
+
+        }
+
+        return true;
     }
+
 
     private void checkPlacement(int rowIndex, int columnIndex) {
         if (0 > rowIndex || 0 > columnIndex
